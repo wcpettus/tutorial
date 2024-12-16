@@ -1,0 +1,40 @@
+services:
+
+  # The broker for the mesh
+  rabbit-broker:
+    image: rabbitmq:3-management
+    ports:
+      - "15672:15672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=dripline
+      - RABBITMQ_DEFAULT_PASS=dripline
+    healthcheck:
+      test: ["CMD-SHELL", "curl -u dripline:dripline http://rabbit-broker:15672/api/overview &> /dev/null || exit 1"]
+
+  device:
+    image: python:3.12.1-slim-bookworm
+    volumes:
+      - ./scpi_device/scpi_device.py:/root/scpi_device.py
+    command:
+      - /root/scpi_device.py
+      - device
+    environment:
+      PYTHONUNBUFFERED: 1  # don't buffer printing to stdout
+
+  scpi-service:
+    image: ghcr.io/driplineorg/dripline-python:develop
+    depends_on:
+      - rabbit-broker
+      - device
+    volumes:
+      - ./scpi-service.yaml:/root/scpi-service.yaml
+    environment:
+      - DRIPLINE_USER=dripline
+      - DRIPLINE_PASSWORD=dripline
+    command:
+      - dl-serve
+      - -c
+      - /root/scpi-service.yaml
+      - -v
+      - -b
+      - rabbit-broker

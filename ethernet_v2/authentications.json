@@ -1,0 +1,10 @@
+{
+    "amqp": {
+        "username": "dripline",
+        "password": "dripline"
+    },
+    "postgresql": {
+        "username": "postgres",
+        "password": ""
+    }
+}

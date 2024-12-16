@@ -1,0 +1,11 @@
+services:
+
+  device:
+    image: python:3.12.1-slim-bookworm
+    volumes:
+      - ./scpi_device/scpi_device.py:/root/scpi_device.py
+    command:
+      - /root/scpi_device.py
+      - device
+    environment:
+      PYTHONUNBUFFERED: 1  # don't buffer printing to stdout

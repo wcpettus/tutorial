@@ -1,0 +1,4 @@
+This tutorial is designed to get a feeling for how ethernet communication over telnet works.
+This does not need to be a docker-compose, but is done for consistency of presentation with future iterations.
+It starts up a fake ethernet device, the device can be accessed on port 24596.
+This device can respond to five commands: [IDN, OPT, READ, VOLTage, FREQuency]

@@ -1,0 +1,3 @@
+This tutorial is designed to integrate the fake ethernet device into a dripline service.
+For dripline we need two additional core services: the broker and the scpi-service; I've added an additional dripline service just for functionality.
+The fake device works identically to the v1 tutorial, but if you try the same functionality as last time, you will discover some things broke.
